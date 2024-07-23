@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog Posts{% endblock %}
+
+{% block content %}
+<section class="bg-gray-100 py-12">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Latest Blog Posts</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for post in posts %}
+      <!-- Wrap the entire div in an <a> tag -->
+      <a href="{% url 'listing:blog_detail' pk=post.pk %}" class="block bg-white shadow-lg rounded-lg overflow-hidden">
+        {% if post.featured_image %}
+        <img class="w-full h-56 object-cover object-center" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+        {% endif %}
+        <div class="p-4">
+          <h3 class="text-blue-500 text-sm font-bold uppercase tracking-wide">{{ post.title }}</h3>
+        </div>
+      </a>
+      {% empty %}
+      <p>No blog posts found.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

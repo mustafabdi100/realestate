@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ property.title }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-'Open Sans', sans-serif bg-gray-100">
+
+  <div class="container mx-auto bg-white shadow-lg mt-8 mb-8 rounded-lg overflow-hidden">
+    <!-- Property Image -->
+    <div class="w-full h-96 bg-cover bg-center" style="background-image: url('{{ property.image.url }}');"></div>
+
+    <!-- Property Details -->
+    <div class="p-4 md:p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ property.title }}</h2>
+      <p class="text-gray-600">{{ property.address }}</p>
+      <p class="text-gray-900 font-bold text-lg mt-2">${{ property.price }}</p>
+      <div class="flex items-center mt-4">
+        <i class="fas fa-vector-square text-gray-600 h-5 w-5"></i>
+        <span class="text-gray-600 ml-2">{{ property.area }}sqft</span>
+        <i class="fas fa-bed ml-4 text-gray-600 h-5 w-5"></i>
+        <span class="text-gray-600 ml-2">{{ property.bedrooms }} Beds</span>
+        <i class="fas fa-bath ml-4 text-gray-600 h-5 w-5"></i>
+        <span class="text-gray-600 ml-2">{{ property.bathrooms }} Baths</span>
+        <i class="fas fa-car ml-4 text-gray-600 h-5 w-5"></i>
+        <span class="text-gray-600 ml-2">{{ property.parking_slots }} Parking</span>
+      </div>
+
+      <!-- Property Description -->
+      <div class="mt-8">
+        <h3 class="font-bold text-xl text-gray-800">Description</h3>
+        <p class="mt-2 text-gray-600">{{ property.description }}</p>
+      </div>
+
+  <!-- Property Inquiry Form -->
+<div class="mt-8" id="inquiry-form-section">
+    <h3 class="font-bold text-xl text-gray-800">Inquire About This Property</h3>
+    <form id="inquiry-form" method="post">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Your Name" class="p-2 rounded border border-gray-300 w-full mb-4">
+        <input type="email" name="email" placeholder="Your Email" class="p-2 rounded border border-gray-300 w-full mb-4">
+        <textarea name="message" rows="4" placeholder="Your Message" class="p-2 rounded border border-gray-300 w-full mb-4"></textarea>
+        <button type="submit" class="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition-colors duration-300">Send Inquiry</button>
+    </form>
+    <!-- Success Message Container -->
+    <div id="success-message" class="hidden"></div>
+</div>
+
+  <script>
+    document.getElementById('inquiry-form').addEventListener('submit', function(e) {
+      e.preventDefault();  // Prevent the default form submission
+      const formData = new FormData(this);
+      fetch("{% url 'listing:property_detail' pk=property.pk %}", {
+        method: 'POST',
+        body: formData,
+        headers: {'X-CSRFToken': formData.get('csrfmiddlewaretoken')},
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Replace the form with the success message
+          const inquiryFormSection = document.getElementById('inquiry-form-section');
+          inquiryFormSection.innerHTML = `<div class="text-green-500 text-xl">${data.message}</div>`;
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    });
+  </script>
+  
+</body>
+</html>

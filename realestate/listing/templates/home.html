@@ -1,0 +1,362 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Landing Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style>
+    .bg-hero {
+      background-image: url('{% static "images/hero1.jpg" %}');
+      background-size: cover;
+      background-position: center;
+    }
+</style>
+
+</head>
+<body class="font-'Open Sans', sans-serif">
+
+    <nav class="bg-transparent text-black py-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="#" class="text-3xl font-bold uppercase">Rezoid</a>
+          <div class="hidden md:flex space-x-4">
+            <a href="#" class="py-2 px-4">Home</a>
+            <a href="#" class="py-2 px-4">Properties</a>
+            <a href="#" class="py-2 px-4">Projects</a>
+            <a href="#" class="py-2 px-4">Pages</a>
+            <a href="#" class="py-2 px-4">Blog</a>
+            <a href="#" class="py-2 px-4">Contact</a>
+          </div>
+          <a href="#" class="md:hidden py-2 px-4"><i class="fa fa-bars"></i></a>
+          <a href="#" class="bg-orange-500 py-2 px-8 rounded shadow-lg">Contact Us</a>
+        </div>
+      </nav>
+      
+
+  <header class="bg-hero h-screen flex items-center justify-center text-center">
+    <div class="text-white">
+      <p class="text-xs font-bold tracking-widest uppercase mb-2">Real Estate Agency</p>
+      <h1 class="font-bold text-5xl uppercase mb-4">Find your dream house</h1>
+      <p class="mb-6">Discover your dream home with Rezoid's tailored solutions. Find comfort, luxury, and convenience in every property. Welcome home.</p>
+      <a href="#" class="bg-orange-500 py-3 px-6 uppercase rounded-lg text-white font-bold hover:bg-orange-600 transition-colors duration-300">Explore Properties</a>
+    </div>
+  </header>
+
+  <!-- Search Bar Section -->
+  <section class="bg-gray-100 py-12">
+    <div class="container mx-auto">
+      <form class="flex justify-center">
+        <input type="text" placeholder="Search properties..." class="p-2 rounded-l-lg w-2/3 focus:outline-none">
+        <button type="submit" class="bg-orange-500 text-white p-2 rounded-r-lg hover:bg-orange-600">Search</button>
+      </form>
+    </div>
+  </section>
+  <!-- Featured Properties Section -->
+<section class="py-12 bg-gray-100">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Featured Listings</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for property in featured_properties %}
+        <a href="{% url 'listing:property_detail' pk=property.pk %}" class="block bg-white shadow-lg rounded-lg overflow-hidden">
+          {% if property.image %}
+            <img class="w-full h-56 object-cover object-center" src="{{ property.image.url }}" alt="{{ property.title }}">
+          {% endif %}
+          <div class="p-4">
+            <p class="text-blue-500 text-sm font-bold uppercase tracking-wide">{{ property.title }}</p>
+            <p class="text-gray-800 text-xs">{{ property.address }}</p>
+            <p class="text-gray-900 font-bold text-lg">${{ property.price }}</p>
+            <div class="flex items-center mt-2">
+              <i class="fas fa-vector-square text-gray-600 h-4 w-4"></i>
+              <span class="text-sm text-gray-600 mx-2">{{ property.area }}sqft</span>
+              <i class="fas fa-bed text-gray-600 h-4 w-4"></i>
+              <span class="text-sm text-gray-600 mx-2">{{ property.bedrooms }} Beds</span>
+              <i class="fas fa-bath text-gray-600 h-4 w-4"></i>
+              <span class="text-sm text-gray-600 mx-2">{{ property.bathrooms }} Baths</span>
+              <i class="fas fa-car text-gray-600 h-4 w-4"></i>
+              <span class="text-sm text-gray-600 mx-2">{{ property.parking_slots }} Parking</span>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- About Us Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap items-center">
+      <div class="w-full md:w-1/2 mb-8 md:mb-0">
+        <img src="{% static 'images/about-us.jpg' %}" alt="Rezoid Team" class="rounded-lg shadow-lg">
+      </div>
+      <div class="w-full md:w-1/2 md:pl-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">About Rezoid</h2>
+        <p class="text-gray-600 mb-6">With over two decades of experience in the real estate industry, Rezoid has established itself as a trusted leader in helping clients find their perfect homes and make smart property investments.</p>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="font-bold text-xl text-orange-500 mb-2">20+</h3>
+            <p class="text-gray-600">Years of Experience</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="font-bold text-xl text-orange-500 mb-2">5000+</h3>
+            <p class="text-gray-600">Happy Clients</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="font-bold text-xl text-orange-500 mb-2">10,000+</h3>
+            <p class="text-gray-600">Properties Sold</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="font-bold text-xl text-orange-500 mb-2">50+</h3>
+            <p class="text-gray-600">Expert Agents</p>
+          </div>
+        </div>
+        <p class="text-gray-600 mb-6">Our team of experienced professionals combines deep local knowledge with cutting-edge technology to provide unparalleled service to our clients. Whether you're buying, selling, or investing, we're here to guide you every step of the way.</p>
+        <div class="flex space-x-4">
+          <a href="#" class="bg-orange-500 text-white py-2 px-6 rounded-lg hover:bg-orange-600 transition duration-300">Our Services</a>
+          <a href="#" class="bg-white text-orange-500 py-2 px-6 rounded-lg border border-orange-500 hover:bg-orange-50 transition duration-300">Meet Our Team</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-16 bg-gray-100">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Comprehensive Services</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">At Rezoid, we offer a wide range of real estate services to meet all your property needs. Our expert team is dedicated to providing top-notch assistance every step of the way.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Property Sales -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="p-1 bg-orange-500"></div>
+        <div class="p-6">
+          <div class="text-orange-500 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Property Sales</h3>
+          <p class="text-gray-600 mb-4">Whether you're looking to buy your dream home or sell your property for the best price, our experienced agents are here to guide you through every step of the process.</p>
+          <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">Learn More &rarr;</a>
+        </div>
+      </div>
+      
+      <!-- Property Management -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="p-1 bg-orange-500"></div>
+        <div class="p-6">
+          <div class="text-orange-500 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Property Management</h3>
+          <p class="text-gray-600 mb-4">Let us handle the day-to-day operations of your rental properties. From tenant screening to maintenance coordination, we ensure your investment is well-managed and profitable.</p>
+          <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">Learn More &rarr;</a>
+        </div>
+      </div>
+      
+      <!-- Investment Consulting -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="p-1 bg-orange-500"></div>
+        <div class="p-6">
+          <div class="text-orange-500 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Investment Consulting</h3>
+          <p class="text-gray-600 mb-4">Make informed decisions with our expert real estate investment advice. We analyze market trends, identify lucrative opportunities, and help you build a strong property portfolio.</p>
+          <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">Learn More &rarr;</a>
+        </div>
+      </div>
+      
+      <!-- Property Valuation -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="p-1 bg-orange-500"></div>
+        <div class="p-6">
+          <div class="text-orange-500 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Property Valuation</h3>
+          <p class="text-gray-600 mb-4">Get an accurate assessment of your property's worth with our comprehensive valuation services. Our experts consider market trends, location, and property features to determine fair market value.</p>
+          <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">Learn More &rarr;</a>
+        </div>
+      </div>
+      
+      <!-- Legal Assistance -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="p-1 bg-orange-500"></div>
+        <div class="p-6">
+          <div class="text-orange-500 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Legal Assistance</h3>
+          <p class="text-gray-600 mb-4">Navigate the complex world of real estate law with confidence. Our team of legal experts can assist with contract reviews, negotiations, and ensure all transactions comply with local regulations.</p>
+          <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">Learn More &rarr;</a>
+        </div>
+      </div>
+      
+      <!-- Home Loans & Financing -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="p-1 bg-orange-500"></div>
+        <div class="p-6">
+          <div class="text-orange-500 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Home Loans & Financing</h3>
+          <p class="text-gray-600 mb-4">Find the right financing solution for your property purchase. We partner with trusted lenders to offer competitive mortgage rates and flexible loan options tailored to your needs.</p>
+          <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">Learn More &rarr;</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-12">
+      <a href="#" class="bg-orange-500 text-white py-3 px-8 rounded-lg hover:bg-orange-600 transition duration-300 inline-block">View All Services</a>
+    </div>
+  </div>
+</section>
+
+  <!-- Testimonials Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">What Our Clients Say</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Don't just take our word for it. Here's what some of our satisfied clients have to say about their experience with Rezoid.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Testimonial 1 -->
+      <div class="bg-white rounded-lg shadow-lg p-8 relative">
+        <div class="absolute top-0 left-0 w-full h-2 bg-orange-500 rounded-t-lg"></div>
+        <div class="text-orange-500 mb-4">
+          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+        </div>
+        <p class="text-gray-600 mb-6 italic">"Rezoid made finding our dream home a breeze. Their expertise and dedication are unmatched! We couldn't be happier with our new property."</p>
+        <div class="flex items-center">
+          <img src="{% static 'images/client1.jpg' %}" alt="John Doe" class="w-12 h-12 rounded-full mr-4">
+          <div>
+            <h4 class="font-bold text-gray-800">John & Jane Doe</h4>
+            <p class="text-gray-600 text-sm">First-time Homebuyers</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="bg-white rounded-lg shadow-lg p-8 relative">
+        <div class="absolute top-0 left-0 w-full h-2 bg-orange-500 rounded-t-lg"></div>
+        <div class="text-orange-500 mb-4">
+          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+        </div>
+        <p class="text-gray-600 mb-6 italic">"I've been investing in real estate for years, and Rezoid's advice has been invaluable. Their market insights helped me make smart investment decisions."</p>
+        <div class="flex items-center">
+          <img src="{% static 'images/client2.jpg' %}" alt="Sarah Smith" class="w-12 h-12 rounded-full mr-4">
+          <div>
+            <h4 class="font-bold text-gray-800">Sarah Smith</h4>
+            <p class="text-gray-600 text-sm">Property Investor</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="bg-white rounded-lg shadow-lg p-8 relative">
+        <div class="absolute top-0 left-0 w-full h-2 bg-orange-500 rounded-t-lg"></div>
+        <div class="text-orange-500 mb-4">
+          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+        </div>
+        <p class="text-gray-600 mb-6 italic">"Rezoid's property management services have taken the stress out of being a landlord. Their team is responsive, professional, and always goes the extra mile."</p>
+        <div class="flex items-center">
+          <img src="{% static 'images/client3.jpg' %}" alt="Michael Johnson" class="w-12 h-12 rounded-full mr-4">
+          <div>
+            <h4 class="font-bold text-gray-800">Michael Johnson</h4>
+            <p class="text-gray-600 text-sm">Property Owner</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <a href="#" class="bg-orange-500 text-white py-3 px-8 rounded-lg hover:bg-orange-600 transition duration-300 inline-block">Read More Testimonials</a>
+    </div>
+  </div>
+</section>
+
+  <!-- Latest Blog Posts Section -->
+<section class="py-16 bg-gray-100">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">Latest from Our Blog</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Stay informed with the latest real estate trends, tips, and insights from our expert team.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for post in latest_posts %}
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span class="text-sm text-gray-500">{{ post.published_date|date:"F d, Y" }}</span>
+          </div>
+          <h3 class="font-bold text-xl mb-2 text-gray-800">{{ post.title }}</h3>
+          <p class="text-gray-600 mb-4">{{ post.content|truncatewords:20 }}</p>
+          <a href="{% url 'listing:blog_detail' pk=post.pk %}" class="text-orange-500 hover:text-orange-600 font-medium">Read More &rarr;</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-12">
+      <a href="{% url 'listing:blog_list' %}" class="bg-orange-500 text-white py-3 px-8 rounded-lg hover:bg-orange-600 transition duration-300 inline-block">View All Posts</a>
+    </div>
+  </div>
+</section>
+  
+<!-- Call-to-Action Section -->
+<section class="py-16 bg-orange-500">
+  <div class="container mx-auto px-4">
+    <div class="bg-white rounded-lg shadow-xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between">
+      <div class="mb-6 md:mb-0 md:mr-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Ready to Find Your Dream Home?</h2>
+        <p class="text-gray-600 max-w-xl">Let's start your journey to homeownership today! Our expert team is here to guide you every step of the way.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+        <a href="{% url 'listing:property_list' %}" class="bg-orange-500 text-white py-3 px-8 rounded-lg hover:bg-orange-600 transition duration-300 text-center">
+          View Properties
+        </a>
+        <a href="{% url 'listing:contact_us' %}" class="bg-gray-800 text-white py-3 px-8 rounded-lg hover:bg-gray-700 transition duration-300 text-center">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+  
+  {% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+</body>

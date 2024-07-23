@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Property Listings{% endblock %}
+
+{% block content %}
+<section class="bg-gray-100 py-12">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">RECENT LISTED</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for property in properties %}
+      <!-- Wrap the entire div in an <a> tag -->
+        <a href="{% url 'listing:property_detail' pk=property.pk %}" class="block bg-white shadow-lg rounded-lg overflow-hidden">
+        {% if property.image %}
+          <img class="w-full h-56 object-cover object-center" src="{{ property.image.url }}" alt="{{ property.title }}">
+        {% endif %}
+        <div class="p-4">
+          <p class="text-blue-500 text-sm font-bold uppercase tracking-wide">{{ property.title }}</p>
+          <p class="text-gray-800 text-xs">{{ property.address }}</p>
+          <p class="text-gray-900 font-bold text-lg">${{ property.price }}</p>
+          <div class="flex items-center mt-2">
+            <i class="fas fa-vector-square text-gray-600 h-4 w-4"></i>
+            <span class="text-sm text-gray-600 mx-2">{{ property.area }}sqft</span>
+            <i class="fas fa-bed text-gray-600 h-4 w-4"></i>
+            <span class="text-sm text-gray-600 mx-2">{{ property.bedrooms }} Beds</span>
+            <i class="fas fa-bath text-gray-600 h-4 w-4"></i>
+            <span class="text-sm text-gray-600 mx-2">{{ property.bathrooms }} Baths</span>
+            <i class="fas fa-car text-gray-600 h-4 w-4"></i>
+            <span class="text-sm text-gray-600 mx-2">{{ property.parking_slots }} Parking</span>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
